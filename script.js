@@ -80,13 +80,22 @@ console.log(audioCtx);
 //oscilator.start();
 
 //between 0 and 1
-var volume=0.125;
+var volume=0.02525;
 
 var button1=document.createElement("button");
 button1.textContent="heyyyy";
 document.body.appendChild(button1);
 //thanks chatgpt for clearing up my slight issue of forgetting
 button1.addEventListener("click",()=>{
+  playSound();
+});
+function playSound(pitch,type){
+  if(pitch<0)pitch=undefined;
+  //if(type!="square"&&type!="triangle"&&type!="sawtooth"&&type!="sine")
+  if(type="")type=undefined;
+  
+  //document.getElementById("canvas").addEventListener("click",()=>{
+  console.log("HIII");
   //console.log("clicked button!");
   var oscilator=audioCtx.createOscillator();
   //triangle, square, sawtooth, sine
@@ -94,7 +103,9 @@ button1.addEventListener("click",()=>{
   //oscilator.type="square";
   //oscilator.type="sawtooth";
   //oscilator.type="sine";
-  oscilator.type = "triangle";
+  //oscilator.type = "triangle";
+  var types=["square","sawtooth","sine","triange"];
+  oscilator.type=type?type:types[Math.floor(Math.random()*types.length)];
     
   //chatgpt sure is very very nice!!! lol
   
@@ -112,16 +123,21 @@ button1.addEventListener("click",()=>{
 
 
   
-
+  //console.log(oscilator.frequency.value);
+  // Set the frequency to a random value between 200 and 800 Hz
+  oscilator.frequency.value = Math.random() * (800 - 200) + 200;
+  //hey this could make music! much like that of pikmin 2 cave music!
   
   oscilator.start();
 
   setTimeout(()=>{oscilator.stop();},1000);
-});
+}
 
 //var audioCtx = new AudioContext();
 
 
 var loop=setInterval(()=>{
-  
+  if(Math.random()<=1/30){
+    playSound();
+  }
 },1000/60);
