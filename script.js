@@ -1,6 +1,6 @@
 //this below here function here can be used to make it only run once the page
 //is fully loaded! nice
-//window.onload = function () {
+window.onload = function () {
 //"use strict";
 var paths = document.getElementsByTagName('path');
 var visualizer = document.getElementById('visualizer');
@@ -80,8 +80,12 @@ console.log(audioCtx);
 //oscilator.start();
 
 //between 0 and 1
-var volume=0.02525;
+var volume=0.25;
 
+//note: it seems that negative and positive frequencies are identical
+//note: a frequency of 0 is silent, 
+//so that will be the random frequency value for the method
+  
 var button1=document.createElement("button");
 button1.textContent="heyyyy";
 document.body.appendChild(button1);
@@ -90,12 +94,13 @@ button1.addEventListener("click",()=>{
   playSound();
 });
 function playSound(pitch,type){
-  if(pitch<0)pitch=undefined;
+  if(pitch==0)pitch=undefined;
   //if(type!="square"&&type!="triangle"&&type!="sawtooth"&&type!="sine")
-  if(type="")type=undefined;
+  if(type=="")type=undefined;
+  //console.log(type);
   
   //document.getElementById("canvas").addEventListener("click",()=>{
-  console.log("HIII");
+  //console.log("HIII");
   //console.log("clicked button!");
   var oscilator=audioCtx.createOscillator();
   //triangle, square, sawtooth, sine
@@ -125,12 +130,14 @@ function playSound(pitch,type){
   
   //console.log(oscilator.frequency.value);
   // Set the frequency to a random value between 200 and 800 Hz
-  oscilator.frequency.value = Math.random() * (800 - 200) + 200;
+  //oscilator.frequency.value = Math.random() * (800 - 200) + 200;
+  oscilator.frequency.value = Math.random() * (200) + 0;
   //hey this could make music! much like that of pikmin 2 cave music!
   
   oscilator.start();
 
   setTimeout(()=>{oscilator.stop();},1000);
+  
 }
 
 //var audioCtx = new AudioContext();
@@ -138,6 +145,9 @@ function playSound(pitch,type){
 
 var loop=setInterval(()=>{
   if(Math.random()<=1/30){
-    playSound();
+    playSound(0,"sine");
   }
 },1000/60);
+
+
+}
