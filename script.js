@@ -139,8 +139,9 @@ function playSound(pitch,type,length,volume,low,high){
   // Set the frequency to a random value between 200 and 800 Hz
   //oscilator.frequency.value = Math.random() * (800 - 200) + 200;
   //console.log(low,high);
-  high=isNaN(high)?high:800;
-  low=isNaN(low)?low:200;
+  //OHHHHHHHHHHHHHHHHHHHH i needed to add a not...
+  high=!isNaN(high)?high:800;
+  low=!isNaN(low)?low:200;
   //console.log(high,low);
   //oscilator.frequency.value=Math.random()*(800-200)+200;
   //console.log(low,high);
@@ -177,7 +178,7 @@ function playSound(pitch,type,length,volume,low,high){
       //console.log("0: "+n0);
     }
     if(Math.random()<=1/8){
-      playSound(0,"sine",Math.floor(Math.random()*4000/12)*12+500,1,1,200);
+      playSound(0,"sine",Math.floor(Math.random()*4000/12)*12+500,1,0,200);
       n1++;
       //console.log("1: "+n1);
     }
