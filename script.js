@@ -56,11 +56,11 @@ var soundNotAllowed = function (error) {
     console.log(error);
   }
 
-/*window.navigator = window.navigator || {};
-  /*navigator.getUserMedia =  navigator.getUserMedia       ||
-                              navigator.webkitGetUserMedia ||
-                              navigator.mozGetUserMedia    ||
-                              null;*/
+//window.navigator = window.navigator || {};
+//  navigator.getUserMedia =  navigator.getUserMedia       ||
+//                            navigator.webkitGetUserMedia ||
+//                            navigator.mozGetUserMedia    ||
+//                            null;
 navigator.getUserMedia({audio:true}, soundAllowed, soundNotAllowed);
 
 //};
@@ -80,8 +80,10 @@ console.log(audioCtx);
 //oscilator.start();
 
 //between 0 and 1
-var volume=0.25;
+var defaultVolume=0.1;
+var realVolume=0.25;
 
+  
 //note: it seems that negative and positive frequencies are identical
 //note: a frequency of 0 is silent, 
 //so that will be the random frequency value for the method
@@ -93,10 +95,15 @@ document.body.appendChild(button1);
 button1.addEventListener("click",()=>{
   playSound();
 });
-function playSound(pitch,type){
+function playSound(pitch,type,length,volume,low,high){
   if(pitch==0)pitch=undefined;
   //if(type!="square"&&type!="triangle"&&type!="sawtooth"&&type!="sine")
   if(type=="")type=undefined;
+  length=length?length:1000;
+  
+  //set the volume
+  volume=volume>=0?volume:defaultVolume;
+  volume*=realVolume;
   //console.log(type);
   
   //document.getElementById("canvas").addEventListener("click",()=>{
@@ -131,23 +138,51 @@ function playSound(pitch,type){
   //console.log(oscilator.frequency.value);
   // Set the frequency to a random value between 200 and 800 Hz
   //oscilator.frequency.value = Math.random() * (800 - 200) + 200;
-  oscilator.frequency.value = Math.random() * (200) + 0;
+  //console.log(low,high);
+  high=isNaN(high)?high:800;
+  low=isNaN(low)?low:200;
+  //console.log(high,low);
+  //oscilator.frequency.value=Math.random()*(800-200)+200;
+  //console.log(low,high);
+  oscilator.frequency.value=pitch?pitch:Math.random()*(high-low)+low;
+  
+  //oscilator.frequency.value = Math.random() * (200) + 0;
   //hey this could make music! much like that of pikmin 2 cave music!
   
   oscilator.start();
 
-  setTimeout(()=>{oscilator.stop();},1000);
+  //setTimeout(()=>{oscilator.stop();},1000);
+  setTimeout(()=>{oscilator.stop();},length);
   
 }
 
 //var audioCtx = new AudioContext();
 
 
-var loop=setInterval(()=>{
-  if(Math.random()<=1/30){
-    playSound(0,"sine");
-  }
-},1000/60);
+//var loop0=setInterval(()=>{
+//  if(Math.random()<=1/30){
+//    playSound(0,"sine");
+//  }
+//},1000/60);
+  //stop the above interval... i should probably just comment it out instead... ok.
+//clearInterval(loop0);
+  
+  var n0=0;
+  var n1=0;
+  
+  var loop1=setInterval(()=>{
+    if(Math.random()<=1/4){
+      playSound(0,"sine",Math.floor(Math.random()*2000/12)*12+500,0.01,200,800);
+      n0++;
+      //console.log("0: "+n0);
+    }
+    if(Math.random()<=1/8){
+      playSound(0,"sine",Math.floor(Math.random()*4000/12)*12+500,0.1,0,200);
+      n1++;
+      //console.log("1: "+n1);
+    }
+  },125);
 
+  //loop1();
 
 }
