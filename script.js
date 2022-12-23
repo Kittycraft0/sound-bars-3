@@ -80,8 +80,8 @@ console.log(audioCtx);
 //oscilator.start();
 
 //between 0 and 1
-var defaultVolume=0.1;
-var realVolume=0.25;
+var defaultVolume=1;
+var realVolume=1;
 
   
 //note: it seems that negative and positive frequencies are identical
@@ -172,12 +172,12 @@ function playSound(pitch,type,length,volume,low,high){
   
   var loop1=setInterval(()=>{
     if(Math.random()<=1/4){
-      playSound(0,"sine",Math.floor(Math.random()*2000/12)*12+500,0.05,200,800);
+      playSound(0,"sine",Math.floor(Math.random()*2000/12)*12+500,0.5,200,800);
       n0++;
       //console.log("0: "+n0);
     }
     if(Math.random()<=1/8){
-      playSound(0,"sine",Math.floor(Math.random()*4000/12)*12+500,0.1,1,200);
+      playSound(0,"sine",Math.floor(Math.random()*4000/12)*12+500,1,1,200);
       n1++;
       //console.log("1: "+n1);
     }
